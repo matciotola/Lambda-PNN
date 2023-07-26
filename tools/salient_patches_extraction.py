@@ -11,6 +11,29 @@ warnings.simplefilter("ignore", UserWarning)
 
 def patches_extractor_w_kmeans(i_in, n_clusters=16, patch_size=256,
                                kmeans_centers_fn=regular_chessboard_initialization):
+    """
+        Extracts patches from an input image using K-means clustering on features obtained from a pre-trained MobileNet V3
+        model.
+
+        Args:
+            i_in (torch.Tensor): Input image tensor of shape (batch_size, channels, height, width).
+            n_clusters (int, optional): Number of clusters for K-means. Default is 16.
+            patch_size (int, optional): Size of the patches to be extracted. Default is 256.
+            kmeans_centers_fn (function, optional): Function to initialize K-means cluster centers.
+                Default is regular_chessboard_initialization.
+
+        Returns:
+            torch.Tensor: Extracted patches of shape (n_clusters, channels, patch_size, patch_size).
+
+        Note:
+            - The MobileNet V3 model used here is pre-trained on the ImageNet dataset.
+            - The input image is split into patches, which are then passed through the pre-trained MobileNet V3 model
+              to obtain feature representations.
+            - The features are further reduced using Principal Component Analysis (PCA) to 3 dimensions for clustering.
+            - K-means clustering is performed on the reduced feature space to group similar patches into clusters.
+            - For each cluster, the patch that is closest to the cluster center in the reduced feature space is selected.
+            - The selected patches from each cluster are returned as the output.
+        """
     transforms = ImageClassification(crop_size=224)
 
     device = i_in.device
