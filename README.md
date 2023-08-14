@@ -1,6 +1,6 @@
 # Unsupervised Deep Learning-based Pansharpening with Jointly-Enhanced Spectral and Spatial Fidelity
 
-[Unsupervised Deep Learning-based Pansharpening with Jointly-Enhanced Spectral and Spatial Fidelity]() ([ArXiv]()) is 
+[Unsupervised Deep Learning-based Pansharpening with Jointly-Enhanced Spectral and Spatial Fidelity](https://ieeexplore.ieee.org/document/10198408) ([ArXiv](https://arxiv.org/abs/2307.14403)) is 
 a deep learning method with residual attention mechanism for Pansharpening, based on unsupervised and full-resolution framework training.
 The proposed algorithm features a novel loss function that jointly promotes the spectral and spatial quality of the pansharpened data.
 Experiments on a large variety of test images, performed in challenging scenarios,
@@ -10,7 +10,16 @@ demonstrate that the proposed method compares favorably with the state of the ar
 If you use λ-PNN in your research, please use the following BibTeX entry.
 
 ```
-Bib entry will be available soon
+@article{Ciotola2023,
+  author={Ciotola, Matteo and Poggi, Giovanni and Scarpa, Giuseppe},
+  journal={IEEE Transactions on Geoscience and Remote Sensing}, 
+  title={Unsupervised Deep Learning-Based Pansharpening With Jointly Enhanced Spectral and Spatial Fidelity}, 
+  year={2023},
+  volume={61},
+  number={},
+  pages={1-17},
+  doi={10.1109/TGRS.2023.3299356}
+ }
 ```
 
 ## Team members
