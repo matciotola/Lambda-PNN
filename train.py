@@ -405,15 +405,15 @@ University of Naples Parthenope
 For further information, please contact the first author by email: matteo.ciotola[at]unina.it '''
                                      )
     optional = parser._action_groups.pop()
-    requiredNamed = parser.add_argument_group('required named arguments')
+    required = parser.add_argument_group('required named arguments')
 
-    requiredNamed.add_argument("-i", "--input", type=str, required=True,
-                               help='The path of the .mat file which contains the MS '
+    required.add_argument("-i", "--input", type=str, required=True,
+                          help='The path of the .mat file which contains the MS '
                                     'and PAN images. For more details, please refer '
                                     'to the GitHub documentation.')
 
-    requiredNamed.add_argument('-s', '--sensor', type=str, required=True, choices=["WV3", "WV2", 'GE1'],
-                               help='The sensor that has acquired the test image. Available sensors are '
+    required.add_argument('-s', '--sensor', type=str, required=True, choices=["WV3", "WV2", 'GE1'],
+                          help='The sensor that has acquired the test image. Available sensors are '
                                     'WorldView-3 (WV3), WorldView-2 (WV2), GeoEye1 (GE1)')
 
     optional.add_argument("-o", "--out_dir", type=str, default='Training',
