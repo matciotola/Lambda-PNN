@@ -435,28 +435,3 @@ if __name__ == '__main__':
     z = imresize(a, 0.5)
     print(z)
     # a = torch.arange(16).float().view(1, 1, 4, 4)
-    """
-    a = torch.zeros(1, 1, 4, 4)
-    a[..., 0, 0] = 100
-    a[..., 1, 0] = 10
-    a[..., 0, 1] = 1
-    a[..., 0, -1] = 100
-    a = torch.zeros(1, 1, 4, 4)
-    a[..., -1, -1] = 100
-    a[..., -2, -1] = 10
-    a[..., -1, -2] = 1
-    a[..., -1, 0] = 100
-    '''
-    # b = imresize(a, sizes=(3, 8), antialiasing=False)
-    # c = imresize(a, sizes=(11, 13), antialiasing=True)
-    # c = imresize(a, sizes=(4, 4), antialiasing=False, kernel='gaussian', sigma=1)
-    # print(a)
-    # print(b)
-    # print(c)
-
-    # r = discrete_kernel('cubic', 1 / 3)
-    # print(r)
-    '''
-    a = torch.arange(225).float().view(1, 1, 15, 15)
-    imresize(a, sizes=[5, 5])
-    """

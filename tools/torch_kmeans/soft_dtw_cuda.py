@@ -87,7 +87,7 @@ def compute_softdtw_backward_cuda(D, R, inv_gamma, bandwidth, max_i, max_j, n_pa
 
     # Indexing logic is the same as above, however, the anti-diagonal needs to
     # progress backwards
-    I = tid
+    row_index = tid
 
     for p in range(n_passes):
         # Reverse the order to make the loop go backward
@@ -96,11 +96,11 @@ def compute_softdtw_backward_cuda(D, R, inv_gamma, bandwidth, max_i, max_j, n_pa
         # convert tid to I, J, then i, j
         J = max(0, min(rev_p - tid, max_j - 1))
 
-        i = I + 1
+        i = row_index + 1
         j = J + 1
 
         # Only compute if element[i, j] is on the current anti-diagonal, and also is within bounds
-        if I + J == rev_p and (I < max_i and J < max_j):
+        if row_index + J == rev_p and (row_index < max_i and J < max_j):
 
             if math.isinf(R[k, i, j]):
                 R[k, i, j] = -math.inf
