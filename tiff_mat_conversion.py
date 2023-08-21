@@ -48,9 +48,9 @@ def tiff_to_mat_conversion(ms_path, pan_path, save_path, ms_initial_point=(0, 0)
 
     io.savemat(save_path, {'I_MS_LR': ms, 'I_PAN': pan})
 
-    I_in = {'I_MS_LR': ms, 'I_PAN': pan}
+    i_in = {'I_MS_LR': ms, 'I_PAN': pan}
 
-    return I_in
+    return i_in
 
 
 def mat_to_tiff_conversion(mat_path, pan_path, save_path):
@@ -85,13 +85,15 @@ def mat_to_tiff_conversion(mat_path, pan_path, save_path):
         out.GetRasterBand(i + 1).WriteArray(ms[:, :, i])
 
     out = []
+    del out
 
     return
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='TiffMatConversion',
-                                     description='Script to convert GeoTiff file in *.mat for Z-PNN usage and the other way around.',
+                                     description='Script to convert GeoTiff file in *.mat for Z-PNN usage and the '
+                                                 'other way around.',
                                      )
 
     parser.add_argument('-m', '--mode', type=str, required=True, choices=["Tiff2Mat", "Mat2Tiff"],
@@ -104,10 +106,12 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--out_path', type=str, help='The path where save the output.')
     parser.add_argument('--initial_point', nargs="+", type=int, default=[0, 0],
                         help='Upper left point for image cropping. The point must be expressed in pixel coordinates, '
-                             'as x y, where 0 0 is precisely the point at the top left and referred to Multi-Spectral image.')
+                             'as x y, where 0 0 is precisely the point at the top left and referred to Multi-Spectral '
+                             'image.')
     parser.add_argument('--final_point', nargs="+", type=int, default=[0, 0],
                         help='Bottom right point for image cropping. The point must be expressed in pixel coordinates, '
-                             'as x y, where 0 0 is precisely the point at the top left and referred to the Multi-Spectral image')
+                             'as x y, where 0 0 is precisely the point at the top left and referred to the '
+                             'Multi-Spectral image')
 
     arguments = parser.parse_args()
 

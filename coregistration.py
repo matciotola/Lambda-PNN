@@ -60,9 +60,9 @@ def fineshift(img, shift_r, shift_c, device, sz=5):
     nbands = img.shape[1]
     kernel = torch.zeros(nbands, 1, sz, sz, device=device, dtype=img.dtype, requires_grad=False)
 
-    if type(shift_r) == int:
+    if isinstance(shift_r, int):
         shift_r = [shift_r] * nbands
-    if type(shift_c) == int:
+    if isinstance(shift_c, int):
         shift_c = [shift_c] * nbands
     if not torch.is_tensor(shift_r):
         shift_r = torch.tensor(shift_r, device=device, requires_grad=False)
@@ -111,7 +111,7 @@ def half_interp23tap_kernel(nbands):
 
 def half_pixel_shift(img, direction, half_kernel, device='cpu'):
     img = img.double()
-    batch_size, nbands, height, widht = img.shape
+    _, nbands, height, width = img.shape
 
     directions = ['N', 'S', 'E', 'W', 'NE', 'NW', 'SE', 'SW']
     assert direction in directions, "Error: wrong direction input '{}' - allowed values " \
