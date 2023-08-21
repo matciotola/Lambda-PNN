@@ -7,8 +7,8 @@
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-3-pairmax)](https://paperswithcode.com/sota/pansharpening-on-worldview-3-pairmax?p=unsupervised-deep-learning-based)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-3-adelaide)](https://paperswithcode.com/sota/pansharpening-on-worldview-3-adelaide?p=unsupervised-deep-learning-based)\
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-2-washington)](https://paperswithcode.com/sota/pansharpening-on-worldview-2-washington?p=unsupervised-deep-learning-based)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-2-pairmax)](https://paperswithcode.com/sota/pansharpening-on-worldview-2-pairmax?p=unsupervised-deep-learning-based)\
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-2-pairmax)](https://paperswithcode.com/sota/pansharpening-on-worldview-2-pairmax?p=unsupervised-deep-learning-based)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-2-washington)](https://paperswithcode.com/sota/pansharpening-on-worldview-2-washington?p=unsupervised-deep-learning-based)\
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-geoeye-1-pairmax)](https://paperswithcode.com/sota/pansharpening-on-geoeye-1-pairmax?p=unsupervised-deep-learning-based)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-geoeye-1-genoa)](https://paperswithcode.com/sota/pansharpening-on-geoeye-1-genoa?p=unsupervised-deep-learning-based)
 
