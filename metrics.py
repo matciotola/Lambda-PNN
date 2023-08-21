@@ -60,7 +60,7 @@ def normalize_block(im):
 
 
 def cayley_dickson_property_1d(onion1, onion2):
-    bs, n = onion1.size()
+    n = onion1.shape[1]
 
     if n > 1:
         middle = int(n / 2)
@@ -89,7 +89,7 @@ def cayley_dickson_property_1d(onion1, onion2):
 
 
 def cayley_dickson_property_2d(onion1, onion2):
-    bs, dim3, _, _ = onion1.size()
+    dim3 = onion1.shape[1]
     if dim3 > 1:
         middle = int(dim3 / 2)
 
@@ -126,7 +126,7 @@ def q_index(im1, im2, size, device):
     neg = -torch.ones(im2.shape, dtype=im2.dtype, device=im2.device)
     neg[:, 0, :, :] = 1
 
-    batch_size, dim3, height, width = im1.size()
+    batch_size, dim3, _, _ = im1.size()
 
     im1, s, t = normalize_block(im1)
 

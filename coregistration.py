@@ -111,7 +111,7 @@ def half_interp23tap_kernel(nbands):
 
 def half_pixel_shift(img, direction, half_kernel, device='cpu'):
     img = img.double()
-    _, nbands, height, width = img.shape
+    nbands = img.shape[1]
 
     directions = ['N', 'S', 'E', 'W', 'NE', 'NW', 'SE', 'SW']
     assert direction in directions, "Error: wrong direction input '{}' - allowed values " \

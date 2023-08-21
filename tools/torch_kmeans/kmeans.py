@@ -29,7 +29,7 @@ def kmeans(
         X,
         num_clusters,
         distance='euclidean',
-        cluster_centers=[],
+        cluster_centers=(),
         tol=1e-4,
         tqdm_flag=True,
         iter_limit=0,
@@ -70,7 +70,8 @@ def kmeans(
     X = X.to(device)
 
     # initialize
-    if type(cluster_centers) == list:  # ToDo: make this less annoyingly weird
+    #if type(cluster_centers) == list:  # ToDo: make this less annoyingly weird
+    if isinstance(cluster_centers, list) or isinstance(cluster_centers, tuple):
         initial_state = initialize(X, num_clusters, seed=seed)
     else:
         if tqdm_flag:
@@ -173,7 +174,6 @@ def kmeans_predict(
 def pairwise_distance(data1, data2, device=torch.device('cpu'), tqdm_flag=True):
     if tqdm_flag:
         print(f'device is :{device}')
-    
     # transfer to device
     data1, data2 = data1.to(device), data2.to(device)
 

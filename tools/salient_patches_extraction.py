@@ -47,7 +47,7 @@ def patches_extractor_w_kmeans(i_in, n_clusters=16, patch_size=256,
     model = model.eval().to(device)
     with torch.no_grad():
         feat = torch.squeeze(model.avgpool(model.features(inp)))
-    _, s, v = torch.pca_lowrank(feat, niter=50)
+    _, _, v = torch.pca_lowrank(feat, niter=50)
     feat_pca = torch.matmul(feat, v[:, :3])
     kmeans_centers = kmeans_centers_fn(feat_pca, n_clusters)
 

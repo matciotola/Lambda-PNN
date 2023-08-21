@@ -420,9 +420,9 @@ def profile(batch_size, seq_len_a, seq_len_b, dims, tol_backward):
     print("\tSpeedup: ", avg_cpu / avg_gpu)
     print()
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
-    from timeit import default_timer as timer
 
     torch.manual_seed(1234)
 

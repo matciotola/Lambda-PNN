@@ -138,7 +138,7 @@ def resize_images(img_ms, img_pan, ratio, sensor=None, mtf=None, apply_mtf_to_pa
 
     n = 41
 
-    r, c, b = img_ms.shape
+    b = img_ms.shape[-1]
 
     img_ms = np.moveaxis(img_ms, -1, 0)
     img_ms = np.expand_dims(img_ms, axis=0)

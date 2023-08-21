@@ -1,4 +1,4 @@
-'''
+"""
 A standalone PyTorch implementation for fast and efficient bicubic resampling.
 The resulting values are the same to MATLAB function imresize('bicubic').
 
@@ -17,23 +17,25 @@ Example::
 tensor([[[[ 0.7506,  2.1004,  3.4503],
           [ 6.1505,  7.5000,  8.8499],
           [11.5497, 12.8996, 14.2494]]]])
-'''
+"""
 
 import math
 import typing
 
 import torch
-from torch.nn import functional as F
+from torch.nn import functional as f
 
-__all__ = ['imresize'] 
+__all__ = ['imresize']
 
 _I = typing.Optional[int]
 _D = typing.Optional[torch.dtype]
+
 
 def nearest_contribution(x: torch.Tensor) -> torch.Tensor:
     range_around_0 = torch.logical_and(x.gt(-0.5), x.le(0.5))
     cont = range_around_0.to(dtype=x.dtype)
     return cont
+
 
 def linear_contribution(x: torch.Tensor) -> torch.Tensor:
     ax = x.abs()
@@ -41,7 +43,8 @@ def linear_contribution(x: torch.Tensor) -> torch.Tensor:
     cont = (1 - ax) * range_01.to(dtype=x.dtype)
     return cont
 
-def cubic_contribution(x: torch.Tensor, a: float=-0.5) -> torch.Tensor:
+
+def cubic_contribution(x: torch.Tensor, a: float = -0.5) -> torch.Tensor:
     ax = x.abs()
     ax2 = ax * ax
     ax3 = ax * ax2
@@ -58,19 +61,20 @@ def cubic_contribution(x: torch.Tensor, a: float=-0.5) -> torch.Tensor:
     cont = cont_01 + cont_12
     return cont
 
-def gaussian_contribution(x: torch.Tensor, sigma: float=2.0) -> torch.Tensor:
+
+def gaussian_contribution(x: torch.Tensor, sigma: float = 2.0) -> torch.Tensor:
     range_3sigma = (x.abs() <= 3 * sigma + 1)
     # Normalization will be done after
-    cont = torch.exp(-x.pow(2) / (2 * sigma**2))
+    cont = torch.exp(-x.pow(2) / (2 * sigma ** 2))
     cont = cont * range_3sigma.to(dtype=x.dtype)
     return cont
 
-def discrete_kernel(
-        kernel: str, scale: float, antialiasing: bool=True) -> torch.Tensor:
 
-    '''
+def discrete_kernel(
+        kernel: str, scale: float, antialiasing: bool = True) -> torch.Tensor:
+    """
     For downsampling with integer scale only.
-    '''
+    """
     downsampling_factor = int(1 / scale)
     if kernel == 'cubic':
         kernel_size_orig = 4
@@ -96,13 +100,13 @@ def discrete_kernel(
 
     return k
 
+
 def reflect_padding(
         x: torch.Tensor,
         dim: int,
         pad_pre: int,
         pad_post: int) -> torch.Tensor:
-
-    '''
+    """
     Apply reflect padding to the given Tensor.
     Note that it is slightly different from the PyTorch functional.pad,
     where boundary elements are used only once.
@@ -112,7 +116,7 @@ def reflect_padding(
     For example,
     [a, b, c, d] would become [b, a, b, c, d, c] with the PyTorch implementation,
     while our implementation yields [a, a, b, c, d, d].
-    '''
+    """
     b, c, h, w = x.size()
     if dim == 2 or dim == -2:
         padding_buffer = x.new_zeros(b, c, h + pad_pre + pad_post, w)
@@ -131,13 +135,13 @@ def reflect_padding(
 
     return padding_buffer
 
+
 def padding(
         x: torch.Tensor,
         dim: int,
         pad_pre: int,
         pad_post: int,
-        padding_type: typing.Optional[str]='reflect') -> torch.Tensor:
-
+        padding_type: typing.Optional[str] = 'reflect') -> torch.Tensor:
     if padding_type is None:
         return x
     elif padding_type == 'reflect':
@@ -147,11 +151,11 @@ def padding(
 
     return x_pad
 
+
 def get_padding(
         base: torch.Tensor,
         kernel_size: int,
         x_size: int) -> typing.Tuple[int, int, torch.Tensor]:
-
     base = base.long()
     r_min = base.min()
     r_max = base.max() + kernel_size - 1
@@ -171,13 +175,13 @@ def get_padding(
 
     return pad_pre, pad_post, base
 
+
 def get_weight(
         dist: torch.Tensor,
         kernel_size: int,
-        kernel: str='cubic',
-        sigma: float=2.0,
-        antialiasing_factor: float=1) -> torch.Tensor:
-
+        kernel: str = 'cubic',
+        sigma: float = 2.0,
+        antialiasing_factor: float = 1) -> torch.Tensor:
     buffer_pos = dist.new_zeros(kernel_size, len(dist))
     for idx, buffer_sub in enumerate(buffer_pos):
         buffer_sub.copy_(dist - idx)
@@ -194,6 +198,7 @@ def get_weight(
     weight /= weight.sum(dim=0, keepdim=True)
     return weight
 
+
 def reshape_tensor(x: torch.Tensor, dim: int, kernel_size: int) -> torch.Tensor:
     # Resize height
     if dim == 2 or dim == -2:
@@ -206,13 +211,13 @@ def reshape_tensor(x: torch.Tensor, dim: int, kernel_size: int) -> torch.Tensor:
         h_out = x.size(-2)
         w_out = x.size(-1) - kernel_size + 1
 
-    unfold = F.unfold(x, k)
+    unfold = f.unfold(x, k)
     unfold = unfold.view(unfold.size(0), -1, h_out, w_out)
     return unfold
 
+
 def reshape_input(
         x: torch.Tensor) -> typing.Tuple[torch.Tensor, _I, _I, _I, _I]:
-
     if x.dim() == 4:
         b, c, h, w = x.size()
     elif x.dim() == 3:
@@ -227,21 +232,22 @@ def reshape_input(
     x = x.view(-1, 1, h, w)
     return x, b, c, h, w
 
+
 def reshape_output(
         x: torch.Tensor, b: _I, c: _I) -> torch.Tensor:
-
     rh = x.size(-2)
     rw = x.size(-1)
     # Back to the original dimension
     if b is not None:
-        x = x.view(b, c, rh, rw)        # 4-dim
+        x = x.view(b, c, rh, rw)  # 4-dim
     else:
         if c is not None:
-            x = x.view(c, rh, rw)       # 3-dim
+            x = x.view(c, rh, rw)  # 3-dim
         else:
-            x = x.view(rh, rw)          # 2-dim
+            x = x.view(rh, rw)  # 2-dim
 
     return x
+
 
 def cast_input(x: torch.Tensor) -> typing.Tuple[torch.Tensor, _D]:
     if x.dtype != torch.float32 or x.dtype != torch.float64:
@@ -251,6 +257,7 @@ def cast_input(x: torch.Tensor) -> typing.Tuple[torch.Tensor, _D]:
         dtype = None
 
     return x, dtype
+
 
 def cast_output(x: torch.Tensor, dtype: _D) -> torch.Tensor:
     if dtype is not None:
@@ -264,17 +271,17 @@ def cast_output(x: torch.Tensor, dtype: _D) -> torch.Tensor:
 
     return x
 
+
 def resize_1d(
         x: torch.Tensor,
         dim: int,
         size: typing.Optional[int],
         scale: typing.Optional[float],
-        kernel: str='cubic',
-        sigma: float=2.0,
-        padding_type: str='reflect',
-        antialiasing: bool=True) -> torch.Tensor:
-
-    '''
+        kernel: str = 'cubic',
+        sigma: float = 2.0,
+        padding_type: str = 'reflect',
+        antialiasing: bool = True) -> torch.Tensor:
+    """
     Args:
         x (torch.Tensor): A torch.Tensor of dimension (B x C, 1, H, W).
         dim (int):
@@ -282,7 +289,7 @@ def resize_1d(
         size (int):
 
     Return:
-    '''
+    """
     # Identity case
     if scale == 1:
         return x
@@ -336,12 +343,12 @@ def resize_1d(
     x = x.sum(dim=1, keepdim=True)
     return x
 
+
 def downsampling_2d(
         x: torch.Tensor,
         k: torch.Tensor,
         scale: int,
-        padding_type: str='reflect') -> torch.Tensor:
-
+        padding_type: str = 'reflect') -> torch.Tensor:
     c = x.size(1)
     k_h = k.size(-2)
     k_w = k.size(-1)
@@ -357,20 +364,20 @@ def downsampling_2d(
     pad_w = (k_w - scale) // 2
     x = padding(x, -2, pad_h, pad_h, padding_type=padding_type)
     x = padding(x, -1, pad_w, pad_w, padding_type=padding_type)
-    y = F.conv2d(x, k, padding=0, stride=scale)
+    y = f.conv2d(x, k, padding=0, stride=scale)
     return y
+
 
 def imresize(
         x: torch.Tensor,
-        scale: typing.Optional[float]=None,
-        sizes: typing.Optional[typing.Tuple[int, int]]=None,
-        kernel: typing.Union[str, torch.Tensor]='cubic',
-        sigma: float=2,
-        rotation_degree: float=0,
-        padding_type: str='reflect',
-        antialiasing: bool=True) -> torch.Tensor:
-
-    '''
+        scale: typing.Optional[float] = None,
+        sizes: typing.Optional[typing.Tuple[int, int]] = None,
+        kernel: typing.Union[str, torch.Tensor] = 'cubic',
+        sigma: float = 2,
+        rotation_degree: float = 0,
+        padding_type: str = 'reflect',
+        antialiasing: bool = True) -> torch.Tensor:
+    """
     Args:
         x (torch.Tensor):
         scale (float):
@@ -383,7 +390,7 @@ def imresize(
 
     Return:
         torch.Tensor:
-    '''
+    """
 
     if scale is None and sizes is None:
         raise ValueError('One of scale or sizes must be specified!')
@@ -393,17 +400,6 @@ def imresize(
     x, b, c, h, w = reshape_input(x)
 
     if sizes is None:
-        '''
-        # Check if we can apply the convolution algorithm
-        scale_inv = 1 / scale
-        if isinstance(kernel, str) and scale_inv.is_integer():
-            kernel = discrete_kernel(kernel, scale, antialiasing=antialiasing)
-        elif isinstance(kernel, torch.Tensor) and not scale_inv.is_integer():
-            raise ValueError(
-                'An integer downsampling factor '
-                'should be used with a predefined kernel!'
-            )
-        '''
         # Determine output size
         sizes = (math.ceil(h * scale), math.ceil(w * scale))
         scales = (scale, scale)
@@ -431,13 +427,14 @@ def imresize(
     x = cast_output(x, dtype)
     return x
 
+
 if __name__ == '__main__':
     # Just for debugging
     torch.set_printoptions(precision=4, sci_mode=False, edgeitems=16, linewidth=200)
     a = torch.arange(64).float().view(1, 1, 8, 8)
     z = imresize(a, 0.5)
     print(z)
-    #a = torch.arange(16).float().view(1, 1, 4, 4)
+    # a = torch.arange(16).float().view(1, 1, 4, 4)
     '''
     a = torch.zeros(1, 1, 4, 4)
     a[..., 0, 0] = 100
@@ -450,15 +447,15 @@ if __name__ == '__main__':
     a[..., -1, -2] = 1
     a[..., -1, 0] = 100
     '''
-    #b = imresize(a, sizes=(3, 8), antialiasing=False)
-    #c = imresize(a, sizes=(11, 13), antialiasing=True)
-    #c = imresize(a, sizes=(4, 4), antialiasing=False, kernel='gaussian', sigma=1)
-    #print(a)
-    #print(b)
-    #print(c)
+    # b = imresize(a, sizes=(3, 8), antialiasing=False)
+    # c = imresize(a, sizes=(11, 13), antialiasing=True)
+    # c = imresize(a, sizes=(4, 4), antialiasing=False, kernel='gaussian', sigma=1)
+    # print(a)
+    # print(b)
+    # print(c)
 
-    #r = discrete_kernel('cubic', 1 / 3)
-    #print(r)
+    # r = discrete_kernel('cubic', 1 / 3)
+    # print(r)
     '''
     a = torch.arange(225).float().view(1, 1, 15, 15)
     imresize(a, sizes=[5, 5])
