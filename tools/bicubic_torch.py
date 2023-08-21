@@ -435,7 +435,7 @@ if __name__ == '__main__':
     z = imresize(a, 0.5)
     print(z)
     # a = torch.arange(16).float().view(1, 1, 4, 4)
-    '''
+    """
     a = torch.zeros(1, 1, 4, 4)
     a[..., 0, 0] = 100
     a[..., 1, 0] = 10
@@ -459,4 +459,4 @@ if __name__ == '__main__':
     '''
     a = torch.arange(225).float().view(1, 1, 15, 15)
     imresize(a, sizes=[5, 5])
-    '''
+    """

@@ -16,7 +16,7 @@ def initialize(X, num_clusters, seed):
     :return: (np.array) initial state
     """
     num_samples = len(X)
-    if seed == None:
+    if seed is None:
         indices = np.random.choice(num_samples, num_clusters, replace=False)
     else:
         np.random.seed(seed)
