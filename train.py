@@ -429,7 +429,7 @@ For further information, please contact the first author by email: matteo.ciotol
                           help='Learning rate with which perform the training.')
 
     optional.add_argument("--epochs", type=int, default=-1, help='Number of the epochs with which perform the '
-                                                                 'fine-tuning of the algorithm.')
+                                                                 'training of the algorithm.')
 
     parser._action_groups.append(optional)
     arguments = parser.parse_args()
