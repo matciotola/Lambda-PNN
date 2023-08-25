@@ -114,10 +114,11 @@ def main_l_pnn_test(args):
         unfold_flag = False
         unfold_shape = []
 
-    # Salient patch extraction for training
-    inputs = patches_extractor_w_kmeans(inputs, n_clusters=num_patches, patch_size=patch_size)
-    if inputs.shape[0] > num_patches:
-        inputs = inputs[:num_patches, :, :, :]
+    # Salient patch extraction for fine-tuning
+    if inputs.shape[-2] > patch_size or inputs.shape[-1] > patch_size:
+        inputs = patches_extractor_w_kmeans(inputs, n_clusters=num_patches, patch_size=patch_size)
+        if inputs.shape[0] > num_patches:
+            inputs = inputs[:num_patches, :, :, :]
 
     # Generating labels and threshold mask for structural loss
     labels_spec = inputs[:, :-1, :, :]
