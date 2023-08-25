@@ -115,7 +115,7 @@ def main_l_pnn_test(args):
         unfold_shape = []
 
     # Salient patch extraction for fine-tuning
-    if inputs.shape[-2] > patch_size or inputs.shape[-1] > patch_size:
+    if inputs.shape[-2] * inputs.shape[-1] > (num_patches * patch_size ** 2):
         inputs = patches_extractor_w_kmeans(inputs, n_clusters=num_patches, patch_size=patch_size)
         if inputs.shape[0] > num_patches:
             inputs = inputs[:num_patches, :, :, :]
