@@ -4,7 +4,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/matciotola/Lambda-PNN?style=social)](https://github.com/matciotola/Lambda-PNN)
 ![Visitors](https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2Fmatciotola%2FLambda-PNN.json\&style=flat\&label=hits\&color=blue)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/fca77356704048f6a47841f73e8c97db)](https://app.codacy.com/gh/matciotola/Lambda-PNN/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
+[![codecov](https://codecov.io/github/matciotola/Lambda-PNN/graph/badge.svg?token=28AINVS2EK)](https://codecov.io/github/matciotola/Lambda-PNN)\
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-3-pairmax)](https://paperswithcode.com/sota/pansharpening-on-worldview-3-pairmax?p=unsupervised-deep-learning-based)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-3-adelaide)](https://paperswithcode.com/sota/pansharpening-on-worldview-3-adelaide?p=unsupervised-deep-learning-based)\
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unsupervised-deep-learning-based/pansharpening-on-worldview-2-pairmax)](https://paperswithcode.com/sota/pansharpening-on-worldview-2-pairmax?p=unsupervised-deep-learning-based)
