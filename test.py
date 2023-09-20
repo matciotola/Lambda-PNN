@@ -224,7 +224,7 @@ def main_l_pnn_test(args):
                 patch = torch.unsqueeze(patches[i], 0)
                 patch = patch.to(device)
                 outputs = net(patch)
-                outputs_patches.append(outputs)
+                outputs_patches.append(outputs.detach().cpu())
 
         # Image reconstruction
         outputs_patches = torch.cat(outputs_patches, 0)
