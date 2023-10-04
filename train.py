@@ -337,15 +337,15 @@ def training_l_pnn(args):
         history_loss_d_lambda.append(running_lambda_loss / nbatches)
         history_loss_struct.append(running_struct_loss / nbatches)
 
-        history_val_loss.append(val_loss / val_nbatches)
-        history_val_loss_repro_ergas.append(running_val_ergas_loss / nbatches)
-        history_val_loss_d_lambda.append(running_val_lambda_loss / nbatches)
-        history_val_loss_struct.append(running_val_struct_loss / nbatches)
+        history_val_loss.append(running_val_loss / val_nbatches)
+        history_val_loss_repro_ergas.append(running_val_ergas_loss / val_nbatches)
+        history_val_loss_d_lambda.append(running_val_lambda_loss / val_nbatches)
+        history_val_loss_struct.append(running_val_struct_loss / val_nbatches)
 
-        history_ci_val_loss.append(val_loss / val_nbatches)
-        history_ci_val_loss_repro_ergas.append(running_ci_val_ergas_loss / nbatches)
-        history_ci_val_loss_d_lambda.append(running_ci_val_lambda_loss / nbatches)
-        history_ci_val_loss_struct.append(running_ci_val_struct_loss / nbatches)
+        history_ci_val_loss.append(running_ci_val_loss / ci_val_nbatches)
+        history_ci_val_loss_repro_ergas.append(running_ci_val_ergas_loss / ci_val_nbatches)
+        history_ci_val_loss_d_lambda.append(running_ci_val_lambda_loss / ci_val_nbatches)
+        history_ci_val_loss_struct.append(running_ci_val_struct_loss / ci_val_nbatches)
 
         # Print the losses
         print(
