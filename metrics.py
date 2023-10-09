@@ -216,8 +216,8 @@ class Q2n(nn.Module):
             reference = padding(labels)
             outputs = padding(outputs)
 
-            outputs = torch.round(outputs)
-            labels = torch.round(reference)
+        outputs = torch.round(outputs)
+        labels = torch.round(reference)
         bs, dim3, dim1, dim2 = labels.size()
 
         if math.ceil(math.log2(dim3)) - math.log2(dim3) != 0:
