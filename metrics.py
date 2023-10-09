@@ -213,11 +213,11 @@ class Q2n(nn.Module):
         if (est1 != 0) + (est2 != 0) > 0:
             padding = torch.nn.ReflectionPad2d((0, est1, 0, est2))
 
-            reference = padding(labels)
+            labels = padding(labels)
             outputs = padding(outputs)
 
         outputs = torch.round(outputs)
-        labels = torch.round(reference)
+        labels = torch.round(labels)
         bs, dim3, dim1, dim2 = labels.size()
 
         if math.ceil(math.log2(dim3)) - math.log2(dim3) != 0:
