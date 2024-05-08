@@ -14,10 +14,10 @@
 
 
 [Unsupervised Deep Learning-based Pansharpening with Jointly-Enhanced Spectral and Spatial Fidelity](https://ieeexplore.ieee.org/document/10198408) ([ArXiv](https://arxiv.org/abs/2307.14403)) is
-a deep learning method with residual attention mechanism for Pansharpening, based on unsupervised and full-resolution framework training.
+a deep learning method with a residual attention mechanism for Pansharpening, based on unsupervised and full-resolution framework training.
 The proposed algorithm features a novel loss function that jointly promotes the spectral and spatial quality of the pansharpened data.
 Experiments on a large variety of test images, performed in challenging scenarios,
-demonstrate that the proposed method compares favorably with the state of the art both in terms of numerical results and visual output.
+demonstrate that the proposed method compares favourably with the state of the art both in terms of numerical results and visual output.
 
 ## Cite λ-PNN
 
@@ -54,7 +54,7 @@ terms of the license, as specified in the document [`LICENSE`](https://github.co
 
 ## Prerequisites
 
-All the functions and scripts were tested on Windows and Ubuntu O.S., with these constrains:
+All the functions and scripts were tested on Windows and Ubuntu O.S., with these constraints:
 
 *   Python 3.10.10
 *   PyTorch 2.0.0
@@ -92,22 +92,22 @@ the operation is not guaranteed with other configurations.
 
 ## Usage
 
-### Before to start
+### Before start
 
-The easiest way for testing this algorithm is to create a `.mat` file. It must contain:
+The easiest way to test this algorithm is to create a `.mat` file. It must contain:
 
 *   `I_MS_LR`: Original Multi-Spectral Stack in channel-last configuration (Dimensions: H x W x B);
 *   `I_PAN`: Original Panchromatic band, without the third dimension (Dimensions: H x W).
 
 It is possible to convert the GeoTIff images into the required format with the scripts provided in [`tiff_mat_conversion.py`](https://github.com/matciotola/Lambda-PNN/blob/master/tiff_mat_conversion.py):
 
-    python tiff_mat_conversion.py -m Tiff2Mat -ms /path/to/ms.tif -pan /path/to/ms.tif  -o path/to/file.mat
+    python tiff_mat_conversion.py -m Tiff2Mat -ms /path/to/ms.tif -pan /path/to/pan.tif  -o path/to/file.mat
 
 Please refer to `--help` for more details.
 
 ### Testing
 
-The easiest command to use the algorithm on full resolution data:
+The easiest command to use the algorithm on full-resolution data:
 
     python test.py -i path/to/file.mat -s sensor_name
 
