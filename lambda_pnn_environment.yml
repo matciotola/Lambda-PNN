@@ -1,20 +1,16 @@
-name: lambda_pnn_env
+name: pytorch_env
 channels:
+  - conda-forge
+  - nvidia
+  - pytorch
   - defaults
 dependencies:
-  - numpy
-  - cudatoolkit
-  - gdal
-  - scikit-image
-  - scipy
-  - tqdm
-  - scikit-learn
-  - matplotlib
-  - h5py
-  - numba
-  - tensorboardx
-  - opencv
-  - pytorch-cuda=11.8
   - pytorch
+  - pytorch-cuda=12.4
   - torchaudio
   - torchvision
+  - gdal
+  - conda-forge::tqdm
+  - matplotlib
+  - scipy
+  - scikit-image
