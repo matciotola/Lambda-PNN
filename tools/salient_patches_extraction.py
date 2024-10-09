@@ -40,6 +40,15 @@ def patches_extractor_w_kmeans(i_in, n_clusters=16, patch_size=256,
     else:
         rgb = (2, 1, 0)
 
+    if i_in.shape[-2] % patch_size != 0:
+        # Padding to have shape as a multiple of max_dim
+        patches_pad2 = patch_size - i_in.shape[-2] % patch_size
+        i_in = torch.nn.functional.pad(i_in, (0, 0, 0, patches_pad2))
+    if i_in.shape[-1] % patch_size != 0:
+        # Padding to have shape as a multiple of max_dim
+        patches_pad1 = patch_size - i_in.shape[-1] % patch_size
+        i_in = torch.nn.functional.pad(i_in, (0, patches_pad1, 0, 0))
+
     inp_exp = torch.cat(torch.split(i_in, patch_size, -1), 0)
     inp_exp = torch.cat(torch.split(inp_exp, patch_size, -2), 0)
     inp = transforms(inp_exp[:, rgb, :, :])

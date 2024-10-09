@@ -28,6 +28,7 @@ def main_l_pnn_test(args):
     method = 'L-PNN'
     sensor = args.sensor
     out_dir = os.path.join(args.out_dir, sensor, method)
+    padded = False
 
     gpu_number = args.gpu_number
     use_cpu = args.use_cpu
@@ -103,6 +104,18 @@ def main_l_pnn_test(args):
 
     # Image reshaping for operational purposes
     if (inputs.shape[-2] > args.max_dim) or (inputs.shape[-1] > args.max_dim):
+
+        if inputs.shape[-2] % args.max_dim != 0:
+            # Padding to have shape as a multiple of max_dim
+            pad2 = args.max_dim - inputs.shape[-2] % args.max_dim
+            inputs = torch.nn.functional.pad(inputs, (0, 0, 0, pad2))
+            padded = True
+        if inputs.shape[-1] % args.max_dim != 0:
+            # Padding to have shape as a multiple of max_dim
+            pad1 = args.max_dim - inputs.shape[-1] % args.max_dim
+            inputs = torch.nn.functional.pad(inputs, (0, pad1, 0, 0))
+            padded = True
+
         kc, kh, kw = nbands + 1, args.max_dim, args.max_dim  # kernel size
         dc, dh, dw = nbands + 1, args.max_dim, args.max_dim  # stride
         patches = inputs.unfold(1, kc, dc).unfold(2, kh, dh).unfold(3, kw, dw)
@@ -246,6 +259,8 @@ def main_l_pnn_test(args):
 
     # Convert to numpy array
     out = outputs.cpu().detach().numpy()
+    if padded:
+        out = out[:, :, :-pad2, :-pad1]
     # Reshape to image
     out = np.squeeze(out)
     out = np.moveaxis(out, 0, -1)
