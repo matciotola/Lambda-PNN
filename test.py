@@ -56,7 +56,7 @@ def main_l_pnn_test(args):
                                                                                     )
 
     # Network definition
-    net = LPNN(nbands + 1).to(device)
+    net = LPNN(nbands + 1)
 
     # Optimizer definition
     optimizer = optim.Adam(net.parameters(), lr=learning_rate, weight_decay=1e-4)
@@ -64,11 +64,12 @@ def main_l_pnn_test(args):
     # Loading pretrained model
     weight_path = os.path.join('weights', sensor + '_' + method + '_model.tar')
     if os.path.exists(weight_path) and not from_scratch_flag:
-        net.load_state_dict(torch.load(weight_path))
+        net.load_state_dict(torch.load(weight_path, map_location="cpu"))
     else:
         print('Training from scratch will be performed.')
 
     # Losses and Downgrade Protocol definitions
+    net = net.to(device)
     coreg = Coregistration(gen_mtf_pan(ratio, sensor), device, ratio).to(device)
     downgrade = mt.DowngradeProtocol(gen_mtf(ratio, sensor), ratio, device).to(device)
     loss_d_lambda_khan = mt.ReproDLambdaKhan(device).to(device)
