@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - nvidia
   - pytorch
+  - numba
   - defaults
 dependencies:
   - pytorch
@@ -14,3 +15,4 @@ dependencies:
   - matplotlib
   - scipy
   - scikit-image
+  - numba
