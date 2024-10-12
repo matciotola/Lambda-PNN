@@ -15,4 +15,4 @@ dependencies:
   - matplotlib
   - scipy
   - scikit-image
-  - numba
+  - numba::numba
